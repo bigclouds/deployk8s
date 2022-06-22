@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-kubeedge-deployment
+  labels:
+    app: nginx-kubeedge-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-kubeedge
+  template:
+    metadata:
+      labels:
+        app: nginx-kubeedge
+    spec:
+      # serviceAccountName: test
+      automountServiceAccountToken: false
+      # hostNetwork: true
+      containers:
+      - name: nginx-kubeedge
+        image: nginx
+        ports:
+        - containerPort: 80
+      nodeName: vm161

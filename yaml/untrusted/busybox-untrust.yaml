@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox2-deployment-untruct
+  labels:
+    app: busybox2-deployment-untruct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox2-untruct
+  template:
+    metadata:
+      annotations:
+        io.kubernetes.cri.untrusted-workload: "true"
+      labels:
+        app: busybox2-untruct
+    spec:
+      containers:
+      - name: busybox2-untruct
+        image: docker.io/library/busybox:latest
+        command:
+          - sleep
+          - "1236000"

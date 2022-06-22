@@ -1,0 +1,29 @@
+{
+    "registry-mirrors": ["http://hub-mirror.c.163.com"],
+    "insecure-registries" : ["myregistry.com", "172.20.13.157", "vm157.com", "registry.com:5000", "172.31.2.197:4000","173.20.5.100:80","173.20.5.202:9001","172.20.91.12:8002"],
+    "debug": false,
+    "live-restore":true,
+    "default-runtime": "runc",
+    "runtimes": {
+      "kata-runtime": {
+        "path": "/usr/bin/kata-runtime"
+      }
+    },
+    "cri-containerd": true,
+    "bip": "172.17.1.1/24",
+    "fixed-cidr": "172.17.1.1/24",
+    "data-root":"/data/docker",
+    "storage-driver": "overlay2",
+    "storage-opts": [
+        "overlay2.override_kernel_check=true",
+        "overlay2.size=2G"
+    ],
+    "exec-opts":[
+        "native.cgroupdriver=systemd"
+    ],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "100m",
+        "max-file": "5"
+    }
+}

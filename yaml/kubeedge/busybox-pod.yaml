@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busyboxkubedge
+  labels:
+    app: busyboxkubedge
+spec:
+  hostNetwork: true
+  automountServiceAccountToken: false
+  containers:
+  - image: myregistry.com/library/busybox:v1
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+  restartPolicy: Always
+  #nodeName: vm161

@@ -1,0 +1,12 @@
+[Unit]
+Description=edgecore.service
+
+[Service]
+Type=simple
+Environment="CHECK_EDGECORE_ENVIRONMENT=false"
+ExecStart=/usr/local/bin/edgecore --logtostderr=false --log-file=/var/log/kubeedge/edgecore.log
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+## install kubeedge
+
+- ### download
+  1. https://github.com/kubeedge/kubeedge/releases/download/v1.6.1/kubeedge-v1.6.1-linux-amd64.tar.gz
+  2. https://github.com/kubeedge/kubeedge/releases/download/v1.6.1/keadm-v1.6.1-linux-amd64.tar.gz
+
+- ### create stream cert. https://kubeedge-docs.readthedocs.io/en/latest/setup/kubeedge_configure.html
+  1. ./kubeedge/certgen.sh stream
+
+- ### - get token
+  1. kubectl get secret -nkubeedge tokensecret -o=jsonpath='{.data.tokendata}' | base64 -d

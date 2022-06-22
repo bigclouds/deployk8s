@@ -1,0 +1,77 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: centos7
+  labels:
+    app: centos7
+  annotations:
+    app: centos7-dp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: centos7
+  template:
+    metadata:
+      labels:
+        app: centos7
+      annotations:
+        app: centos7
+    spec:
+      runtimeClassName: kataclass
+      #-------------------------------------------
+      hostAliases:                   #配置hosts文件
+      - ip: "10.100.1.1"             #配置解析的IP
+        hostnames:
+        - "www.baidu.com"            #配置域名
+      #-------------------------------------------    
+      containers:
+      - name: centos7
+        image: myregistry.com/library/centos:latest
+        securityContext:
+          privileged: true
+        command:
+        - "/bin/sh"
+        args:
+        - "-c"
+        - "while true; do sleep 99999999999; done"
+        env:
+        - name: LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: myconfig
+              key: special.level
+        - name: TYPE
+          valueFrom:
+            configMapKeyRef:
+              name: myconfig
+              key: special.type
+        volumeMounts:
+        - mountPath: /etc/config
+          name: myconfig
+          readOnly: false
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+        - mountPath: /host1
+          name: test-volume
+      volumes:
+      - name: myconfig
+        configMap:
+          name: myconfig
+      - name: config
+        configMap:
+          # Provide the name of the ConfigMap you want to mount.
+          name: game-demo
+          # An array of keys from the ConfigMap to create as files
+          items:
+          - key: "game.properties"
+            path: "game.properties"
+          - key: "user-interface.properties"
+            path: "user-interface.properties"
+      - name: test-volume
+        hostPath:
+          path: /media/host1
+          type: Directory
+      nodeSelector:
+        kubernetes.io/hostname: node5

@@ -1,0 +1,37 @@
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: kuryr
+  namespace: default
+spec: 
+  config: '{
+  "name": "kuryr",
+  "cniVersion": "0.3.1",
+  "plugins": [
+    {
+      "type": "kuryr-cni",
+      "kuryr_conf": "/etc/kuryr/kuryr.conf",
+      "debug": true
+    }
+  ] 
+  }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: kuryr
+  namespace: kube-system
+spec: 
+  config: '{
+  "name": "kuryr",
+  "cniVersion": "0.3.1",
+  "plugins": [
+    {
+      "type": "kuryr-cni",
+      "kuryr_conf": "/etc/kuryr/kuryr.conf",
+      "debug": true
+    }
+  ]
+  }'
+---

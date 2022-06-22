@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx1-deployment-untrusted
+  annotations:
+    io.kubernetes.cri.untrusted-workload: "true"
+  labels:
+    app: nginx1-deployment-untrusted
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx1-untrusted
+  template:
+    metadata:
+      annotations:
+        io.kubernetes.cri.untrusted-workload: "true"
+      labels:
+        app: nginx1-untrusted
+    spec:
+      containers:
+      - name: nginx1-untrusted
+        image: nginx
+        ports:
+        - containerPort: 80

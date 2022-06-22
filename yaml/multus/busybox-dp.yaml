@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox1-deployment-kuryr
+  labels:
+    app: busybox1-deployment-kuryr
+  annotations:
+    a: b
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: busybox1
+  template:
+    metadata:
+      labels:
+        app: busybox1
+      annotations:
+        v1.multus-cni.io/default-network: kuryr
+        #k8s.v1.cni.cncf.io/networks: docker-conf, flannel
+        #k8s.v1.cni.cncf.io/networks: kuryr
+    spec:
+      automountServiceAccountToken: false
+      #runtimeClassName: kataclass
+      #restartPolicy: Always
+      containers:
+      - name: busybox1
+        image: myregistry.com/library/busybox:v1
+        command:
+          - sleep
+          - "123600"

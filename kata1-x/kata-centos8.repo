@@ -1,0 +1,6 @@
+[kata-containers]
+name=Kata Containers
+baseurl=http://mirrors.163.com/centos/$releasever/virt/$basearch/kata-containers
+enabled=1
+gpgcheck=1
+skip_if_unavailable=1

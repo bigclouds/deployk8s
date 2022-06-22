@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: centos-deployment
+  labels:
+    app: centos-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: centos-kata
+  template:
+    metadata:
+      labels:
+        app: centos-kata
+    spec:
+      runtimeClassName: kataclass
+      containers:
+      - name: centos-kata
+        image: myregistry.com/library/centos:latest
+        command:
+          - sleep
+          - "92360000000"
+        imagePullPolicy: IfNotPresent

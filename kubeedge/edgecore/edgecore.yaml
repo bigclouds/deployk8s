@@ -1,0 +1,100 @@
+apiVersion: edgecore.config.kubeedge.io/v1alpha1
+database:
+  aliasName: default
+  dataSource: /var/lib/kubeedge/edgecore.db
+  driverName: sqlite3
+kind: EdgeCore
+modules:
+  dbTest:
+    enable: false
+  deviceTwin:
+    enable: true
+  edgeHub:
+    enable: true
+    heartbeat: 15
+    httpServer: https://172.20.47.126:10002
+    projectID: e632aba927ea4ac2b575ec1603d56f10
+    quic:
+      handshakeTimeout: 30
+      readDeadline: 15
+      server: 172.20.13.161:10001
+      writeDeadline: 15
+    rotateCertificates: true
+    tlsCaFile: /etc/kubeedge/ca/rootCA.crt
+    tlsCertFile: /etc/kubeedge/certs/server.crt
+    tlsPrivateKeyFile: /etc/kubeedge/certs/server.key
+    token: 133c15a45c44455aa367e94636aae74d9471f2e0000f40ad182f3db7e0d2eb56.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTk4NjY3NTd9.ig5LET2R6iwKxX55dxL7h6yCAKkDySwn6Y-ireFUO0Q
+    websocket:
+      enable: true
+      handshakeTimeout: 30
+      readDeadline: 15
+      server: 172.20.47.126:10000
+      writeDeadline: 15
+  edgeMesh:
+    enable: true
+    lbStrategy: RoundRobin
+    listenInterface: docker0
+    listenPort: 40001
+    subNet: 9.251.0.0/16
+  edgeStream:
+    enable: true
+    handshakeTimeout: 30
+    readDeadline: 15
+    server: 172.20.47.126:10004
+    tlsTunnelCAFile: /etc/kubeedge/ca/rootCA.crt
+    tlsTunnelCertFile: /etc/kubeedge/certs/server.crt
+    tlsTunnelPrivateKeyFile: /etc/kubeedge/certs/server.key
+    writeDeadline: 15
+  edged:
+    cgroupDriver: cgroupfs
+    cgroupRoot: ""
+    cgroupsPerQOS: true
+    clusterDNS: ""
+    clusterDomain: ""
+    cniBinDir: /opt/cni/bin
+    cniCacheDirs: /var/lib/cni/cache
+    cniConfDir: /etc/cni/net.d
+    concurrentConsumers: 5
+    devicePluginEnabled: false
+    dockerAddress: unix:///var/run/docker.sock
+    edgedMemoryCapacity: 7852396000
+    enable: true
+    enableMetrics: true
+    gpuPluginEnabled: false
+    hostnameOverride: vm161
+    imageGCHighThreshold: 80
+    imageGCLowThreshold: 40
+    imagePullProgressDeadline: 60
+    maximumDeadContainersPerPod: 1
+    networkPluginMTU: 1500
+    nodeIP: 172.20.13.161
+    nodeStatusUpdateFrequency: 10
+    podSandboxImage: kubeedge/pause:3.1
+    registerNode: true
+    registerNodeNamespace: default
+    remoteImageEndpoint: unix:///var/run/dockershim.sock
+    remoteRuntimeEndpoint: unix:///var/run/dockershim.sock
+    runtimeRequestTimeout: 2
+    runtimeType: docker
+    volumeStatsAggPeriod: 60000000000
+  eventBus:
+    enable: true
+    eventBusTLS:
+      tlsMqttCAFile: /etc/kubeedge/ca/rootCA.crt
+      tlsMqttCertFile: /etc/kubeedge/certs/server.crt
+      tlsMqttPrivateKeyFile: /etc/kubeedge/certs/server.key
+    mqttMode: 2
+    mqttQOS: 0
+    mqttRetain: false
+    mqttServerExternal: tcp://127.0.0.1:1883
+    mqttServerInternal: tcp://127.0.0.1:1884
+    mqttSessionQueueSize: 100
+  metaManager:
+    contextSendGroup: hub
+    contextSendModule: websocket
+    enable: true
+    metaServer: {}
+    podStatusSyncInterval: 60
+    remoteQueryTimeout: 60
+  serviceBus:
+    enable: false

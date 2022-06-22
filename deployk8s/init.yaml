@@ -1,0 +1,54 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: ucf8tq.w1sablp8pc6hx8k0
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 172.20.32.105
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /run/containerd/containerd.sock
+  #criSocket: /var/run/dockershim.sock
+  name: node5
+  taints: null
+  kubeletExtraArgs:
+    pod-infra-container-image: myregistry.com/google_containers/pause:3.4.1
+    network-plugin: cni
+    container-runtime: remote
+    container-runtime-endpoint: unix:///run/containerd/containerd.sock
+    read-only-port: "10255"
+    cgroup-driver: systemd
+certificateKey: f9c26d6f400a59c81744a26d024439fc85494ef647a945b4722da29ac18774d9
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+  certSANs:
+  - "172.20.32.105"
+  - "apiserver.com"
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /data/etcd
+imageRepository: myregistry.com/google_containers
+controlPlaneEndpoint: apiserver.com
+kind: ClusterConfiguration
+kubernetesVersion: v1.20.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/16
+  podSubnet: 10.100.0.0/16
+scheduler: {}
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: "ipvs"
